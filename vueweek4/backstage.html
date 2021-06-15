@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>後台管理 Backstage</title>
+    <!-- Vue -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container py-5" id="app">
+        <button type="button" class="btn btn-info text-light d-block ms-auto mb-4" id="addProModalBtn" @click="openModal('add'),item">新增產品</button>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th width="120">分類</th>
+                    <th>產品名稱</th>
+                    <th width="120" class="text-end">原價</th>
+                    <th width="120" class="text-end">售價</th>
+                    <th width="180" class="text-center">啟用狀態</th>
+                    <th width="180" class="text-center">編輯</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item) in productData" :key="item.id">
+                    <td>{{item.category}}</td>
+                    <td>{{item.title}}</td>
+                    <td class="text-end">{{item.origin_price}}</td>
+                    <td class="text-end">{{item.price}}</td>
+                    <td class="text-center">
+                        <span class="text-success" v-if="item.is_enabled">啟用</span>
+                        <span v-else>不啟用</span>
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                            <button type="button" class="btn btn-outline-info" @click="openModal('edit',item)">編輯</button>
+                            <button type="button" class="btn btn-outline-danger" @click="openModal('delete',item)">刪除</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination :page="pagination" @get-product="getProductData"></pagination>
+        <!-- add/edit Modal -->
+        <product-modal :temp-product="tempProduct" :is-add-pro="isAddPro" @update-product="updateProduct" @close-modal="closeModal('proClose')"></product-modal>
+        <!-- del Modal -->
+        <delete-modal :tempProduct="tempProduct" @del-product="delProduct" @close-modal="closeModal('deleteClose')">
+            <template #pro-name>
+                <strong class="text-danger">{{tempProduct.title}}</strong>
+            </template>
+        </delete-modal>
+    </div>
+    
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script src="js/backstage.js" type="module"></script>
+</body>
+</html>

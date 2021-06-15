@@ -1,0 +1,10 @@
+.custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #17a2b8 !important;
+    background-color: #17a2b8 !important;
+  }
+  
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
