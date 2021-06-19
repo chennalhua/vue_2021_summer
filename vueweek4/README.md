@@ -6,6 +6,10 @@ https://chennalhua.github.io/vue_2021_summer/vueweek4/index.html
   * 登入傳接 API
 - 後台產品頁面
   * 取得、新增、刪除、編輯產品資料傳接 API
+  ##### 元件化（prop、emit 資料傳遞）
+  * 使用 import module 來引入元件
+  * 後台頁面 Modal 
+  * 分頁
 
 ### 修正
 - apiUrl 和 apiPath 放在全域，不建議放在 data 內，因為這個資料不會修改也不會在畫面上使用
