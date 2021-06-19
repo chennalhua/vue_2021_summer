@@ -1,5 +1,5 @@
 ## vue_week2 (後台頁面)
-https://chennalhua.github.io/vue_2021_summer/vueweek2/index.html
+https://chennalhua.github.io/vue_2021_summer/vueweek2/vueweek2_RESTful API/index.html
 
 ### 完成
 - 登入頁面
