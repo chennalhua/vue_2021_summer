@@ -1,5 +1,5 @@
 # hex_vueweek4
-https://chennalhua.github.io/hex_vueweek4/
+https://chennalhua.github.io/vue_2021_summer/vueweek4/index.html
 
 ### 修正
 - apiUrl 和 apiPath 不建議放在 data 內，可以放在全域，因為這個資料不會修改也不會在畫面上使用
