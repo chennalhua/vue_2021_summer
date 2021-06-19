@@ -1,5 +1,11 @@
-## vue_week4
+## vue_week4 (後台頁面)
 https://chennalhua.github.io/vue_2021_summer/vueweek4/index.html
+
+### 完成
+- 登入頁面
+  * 登入傳接 API
+- 後台產品頁面
+  * 取得、新增、刪除、編輯產品資料傳接 API
 
 ### 修正
 - apiUrl 和 apiPath 不建議放在 data 內，可以放在全域，因為這個資料不會修改也不會在畫面上使用
