@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物車頁面</title>
+    <!-- Vue -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+<div id="app">
+  <div v-if="loadingStatus.loadingPage" class="vh-100 full-loading">
+    <div class="spinner-border page-loading" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">LOGO</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">產品</a>
+              </li>
+            </ul>
+            <a href="cart.html" class="btn btn-light"><i class="bi bi-cart-fill text-primary"></i></a>
+          </div>
+        </div>
+      </nav>
+      <div class="container-fluid">
+        <div v-if="cartProductData.final_total==0" class="text-center vh-100">
+          <p class="h4 mt-5 mb-3 text-primary">購物車尚無商品 QQ</p>
+          <a href="index.html" class="btn btn-third ">點我購物去</a>
+         </div>
+         <div class="row" v-else>
+           <div class="col-lg-8">
+              <p class="h3 mt-3 mb-3 text-third text-center">我的購物車</p>
+           <ul class="p-0" v-if="cartProductData.carts">
+             <li class="my-3 row" v-for="item in cartProductData.carts" :key="cartProductData.carts.id">
+               <div class="col-12 col-lg-3 my-md-auto text-center">
+                 <img :src="item.product.imageUrl" :alt="item.product.title" class="img-fluid">
+                </div>
+               <div class="col-9 py-4 mx-auto">
+                 <div class="row align-items-center">
+                   <div class="col-12 col-lg-6 text-center text-lg-start">
+                    <h3 class="h4 text-primary">{{item.product.title}}</h3>
+                    <del>原價：{{item.product.origin_price}} 元</del>
+                    <p class="h5">特價：{{item.product.price}} 元</p>
+                   </div>
+                   <div class="col-10 col-lg-4">
+                      <div class="input-group align-items-center cart-num-group">
+                        <a href="#" class="btn text-primary" @click.prevent="updateCart(item.id,item.qty-1)"><i class="bi bi-dash-circle-fill h5"></i></a>
+                        <input type="number" class="form-control" min="1" v-model:number="item.qty" disabled>
+                        <a href="#" class="btn text-primary" @click.prevent="updateCart(item.id,item.qty+1)"><i class="bi bi-plus-circle-fill h5"></i></a>
+                      </div>
+                   </div>
+                   <div class="col-2 col-lg-2 text-center">
+                     <a href="#" class="btn btn-outline-danger" @click.prevent="delSingleCart(item.id)"><i class="bi bi-trash-fill"></i></a>
+                   </div>
+                 </div>
+               </div>
+             </li>
+           </ul>
+           <div class="d-flex justify-content-between align-items-center my-4" v-if="cartProductData.final_total > 0">
+             <a href="#" class="btn btn-outline-danger" @click.prevent="delAllCart">刪除全部</a>
+             <p class="h5 pe-3">總計：${{cartProductData.final_total}} 元</p>
+           </div>
+          </div>
+           <div class="col-lg-4 bg-third vh-100 text-light">
+             <h2 class="text-center mt-4">結帳</h2>
+             <v-form class="px-4" v-slot="{ errors }" ref="formDom" @submit="checkoutOrder">
+               <div class="mb-3">
+                 <label for="username">姓名</label>
+                 <v-field id="username" name="姓名" type="text" class="form-control" 
+                 :class="{ 'is-invalid': errors['姓名'] }" placeholder="請輸入姓名" 
+                 rules="required" v-model="form.user.name"></v-field>
+                 <error-message name="姓名" class="invalid-feedback"></error-message>
+               </div><!--姓名-->
+               <div class="mb-3">
+                <label for="email">信箱</label>
+                <v-field id="email" name="信箱" type="email" class="form-control" 
+                :class="{ 'is-invalid': errors['信箱'] }" placeholder="請輸入信箱" 
+                rules="email|required" v-model="form.user.email"></v-field>
+                <error-message name="信箱" class="invalid-feedback"></error-message>
+              </div><!--信箱-->
+              <div class="mb-3">
+                <label for="tel">聯絡電話</label>
+                <v-field id="tel" name="聯絡電話" type="tel" class="form-control" 
+                :class="{ 'is-invalid': errors['聯絡電話'] }" placeholder="請輸入聯絡電話" 
+                :rules="isPhone" v-model="form.user.tel"></v-field>
+                <error-message name="聯絡電話" class="invalid-feedback"></error-message>
+              </div><!--聯絡電話-->
+              <div class="mb-3">
+                <label for="address">地址</label>
+                <v-field id="address" name="地址" type="text" class="form-control" 
+                :class="{ 'is-invalid': errors['地址'] }" placeholder="請輸入地址" 
+                rules="required" v-model="form.user.address"></v-field>
+                <error-message name="地址" class="invalid-feedback"></error-message>
+              </div><!--地址-->
+              <div class="mb-3">
+                <label for="address">留言</label>
+                <textarea name="留言" class="form-control" rows="4"></textarea>
+              </div>
+              <div class="mb-3 d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary text-light">送出</button>
+              </div>
+             </v-form>
+           </div>
+         </div> 
+      </div>
+      <footer class="bg-primary text-light py-3 text-center">
+        <p class="m-0">footer</p>
+      </footer>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
+<!-- vee validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/4.1.17/vee-validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vee-validate/i18n@4.1.17/dist/vee-validate-i18n.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vee-validate/rules@4.1.17/dist/vee-validate-rules.min.js"></script>
+<!-- /vee validation -->
+<script src="js/cart.js" type="module"></script>
+</body>
+</html>

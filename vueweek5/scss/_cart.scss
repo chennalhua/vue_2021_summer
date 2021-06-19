@@ -1,0 +1,20 @@
+.cart-num-group input::-webkit-outer-spin-button,
+.cart-num-group input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+}
+
+.cart-num-group{
+    .form-control:disabled, .form-control[readonly]{
+        background-color: #fff;
+        // cursor:not-allowed;
+    }
+}
+
+.full-loading{
+    background-color:rgba(45, 45, 45, 0.132);
+    .page-loading{
+        position: absolute;
+        top:50%;
+        left: 50%;
+    }
+}

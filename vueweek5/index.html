@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>產品頁面</title>
+    <!-- Vue -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+<div id="app">
+  <div v-if="loadingStatus.loadingPage" class="vh-100 full-loading">
+    <div class="spinner-border page-loading" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">LOGO</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">產品</a>
+              </li>
+            </ul>
+            <a href="cart.html" class="btn btn-light"><i class="bi bi-cart-fill text-primary"></i></a>
+          </div>
+        </div>
+      </nav>
+      <div class="container mt-5" v-else>
+          <div class="row no-gutters">
+              <!-- <div class="col-lg-3 mb-3 mb-lg-0">
+                  <div class="list-group">
+                      <h2 class="list-group-item bg-third text-light text-center h4 m-0">類別</h2>
+                      <a href="#" class="list-group-item list-group-item-action active">全部</a>
+                      <a href="#" class="list-group-item list-group-item-action">車種</a>
+                      <a href="#" class="list-group-item list-group-item-action">配件</a>
+                  </div>
+              </div> -->
+              <div class="px-3 px-lg-0">
+                  <product-list :products="productsData" :loading-status="loadingStatus"
+                  @click-modal="clickModal"
+                  @add-cart="addCart"
+                  ></product-list>
+              </div>
+          </div>
+      </div>
+      <footer class="bg-primary text-light py-3 text-center mt-5">footer</footer>
+      <product-info-modal :product="product">
+      </product-info-modal>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
+<script src="js/all.js" type="module"></script>
+</body>
+</html>
