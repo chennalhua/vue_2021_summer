@@ -1,5 +1,6 @@
 import productList from "./component/productList.js";
 import productInfoModal from "./component/productInfoModal.js";
+import navbar from "./component/navbar.js";
 
 const apiUrl= 'https://vue3-course-api.hexschool.io';
 const apiPath='vip899629';
@@ -19,14 +20,17 @@ const app = Vue.createApp({
     },
     components:{
         productList,
-        productInfoModal
+        productInfoModal,
+        navbar
     },
     methods:{
         getProducts(){
             axios.get(`${apiUrl}/api/${apiPath}/products`)
             .then((res) => {
-                this.productsData = res.data.products;
-                this.loadingStatus.loadingPage = false
+                if(res.data.success){
+                    this.productsData = res.data.products;
+                    this.loadingStatus.loadingPage = false
+                }
             })
             .catch((err) => {
                 console.log(err)
@@ -49,9 +53,9 @@ const app = Vue.createApp({
         addCart(id, qty=1){ //qty=1 預設數量為 1
             this.loadingStatus.loadingItem = id
             axios.post(`${apiUrl}/api/${apiPath}/cart`,{
-                "data": {
-                    "product_id":id,
-                    "qty":qty 
+                data: {
+                    product_id:id,
+                    qty:qty 
                 } 
             })
             .then(res => {

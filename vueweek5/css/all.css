@@ -11587,6 +11587,16 @@ fieldset:disabled .btn {
   }
 }
 
+.logo a {
+  display: block;
+  background: url("../img/logo.png") no-repeat;
+  width: 80px;
+  height: 50px;
+  text-indent: 101%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .cart-num-group input::-webkit-outer-spin-button,
 .cart-num-group input::-webkit-inner-spin-button {
   -webkit-appearance: none;

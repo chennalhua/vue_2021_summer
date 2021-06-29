@@ -6,12 +6,10 @@
 .cart-num-group{
     .form-control:disabled, .form-control[readonly]{
         background-color: #fff;
-        // cursor:not-allowed;
     }
 }
 
 .full-loading{
-    // background-color:rgba(45, 45, 45, 0.132);
     .page-loading{
         position: absolute;
         top:50%;

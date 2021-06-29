@@ -1,6 +1,8 @@
 const apiUrl= 'https://vue3-course-api.hexschool.io';
 const apiPath='vip899629';
 
+import navbar from "./component/navbar.js";
+
 const app = Vue.createApp({
     data(){
         return{
@@ -18,6 +20,9 @@ const app = Vue.createApp({
                 loadingPage:true,
             }//讀取效果
         }
+    },
+    components:{
+        navbar
     },
     methods: {
         getCartProduct(){
@@ -37,9 +42,9 @@ const app = Vue.createApp({
         updateCart(id,qty){
             if(qty > 0){
                 axios.put(`${apiUrl}/api/${apiPath}/cart/${id}`,{
-                    "data": { 
-                        "product_id":id,
-                        "qty":qty
+                    data: { 
+                        product_id:id,
+                        qty:qty
                     }
                 })
                 .then(res => {
@@ -76,14 +81,14 @@ const app = Vue.createApp({
         },
         checkoutOrder(){
             axios.post(`${apiUrl}/api/${apiPath}/order`,{
-                "data": {
-                    "user": {
-                      "name": this.form.user.name,
-                      "email": this.form.user.email,
-                      "tel": this.form.user.tel,
-                      "address": this.form.user.address
+                data: {
+                    user: {
+                      name: this.form.user.name,
+                      email: this.form.user.email,
+                      tel: this.form.user.tel,
+                      address: this.form.user.address
                     },
-                    "message": this.form.message
+                    message: this.form.message
                 }
             })
             .then(res => {
@@ -101,7 +106,7 @@ const app = Vue.createApp({
         },
         isPhone(value) {
             const phoneNumber = /^(09)[0-9]{8}$/
-            return phoneNumber.test(value) ? true : '請填入正確的電話號碼'
+            return phoneNumber.test(value) ? true : '請填入正確的手機號碼'
         }
     },
     mounted(){

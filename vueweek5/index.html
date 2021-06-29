@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>產品頁面</title>
+    <title>LoopBike|產品頁面</title>
     <!-- Vue -->
     <script src="https://unpkg.com/vue@next"></script>
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
@@ -12,22 +12,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">LOGO</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">產品</a>
-              </li>
-            </ul>
-            <a href="cart.html" class="btn btn-light"><i class="bi bi-cart-fill text-primary"></i></a>
-          </div>
-        </div>
-      </nav>
+     <navbar></navbar>
       <div v-if="loadingStatus.loadingPage" class="vh-100 full-loading">
         <div class="spinner-border page-loading" style="width: 3rem; height: 3rem;" role="status">
           <span class="visually-hidden">Loading...</span>
