@@ -1,7 +1,7 @@
 ## vue_week5
 https://chennalhua.github.io/vue_2021_summer/vueweek5/index.html
 
-### 完成
+### 目前完成進度
 #### loading 效果
 #### 前台頁面串接 API
 - 前台頁面
